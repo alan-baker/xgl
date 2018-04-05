@@ -285,6 +285,12 @@ define spir_func <4 x i32> @_Z17SubgroupBallotKHRb(i1 %value) #0
     ret <4 x i32> %3
 }
 
+define spir_func i64 @_Z9BallotARBb(i1 %value)
+{
+    %1 = call i64 @llpc.ballot(i1 %value)
+    ret i64 %1
+}
+
 ; GLSL: int/uint readInvocation(int/uint, uint)
 define spir_func i32 @_Z25SubgroupReadInvocationKHRii(i32 %value, i32 %invocationIndex)
 {
@@ -306,6 +312,12 @@ define spir_func float @_Z25SubgroupReadInvocationKHRfi(float %value, i32 %invoc
 define spir_func i32 @_Z26SubgroupFirstInvocationKHRi(i32 %value)
 {
     %1 = call i32 @llvm.amdgcn.readfirstlane(i32 %value)
+    ret i32 %1
+}
+
+define spir_func i32 @_Z22ReadFirstInvocationARBi(i32 %value)
+{
+    %1 = call i32 @_Z26SubgroupFirstInvocationKHRi(i32 %value)
     ret i32 %1
 }
 
@@ -336,6 +348,14 @@ define spir_func i1 @_Z14SubgroupAllKHRb(i1 %value)
     %3 = icmp eq i64 %1, %2
 
     ret i1 %3
+}
+
+define spir_func i32 @_Z13sub_group_alli(i32 %value)
+{
+  %1 = trunc i32 %value to i1
+  %2 = call i1 @_Z14SubgroupAllKHRb(i1 %1)
+  %3 = zext i1 %2 to i32
+  ret i32 %3
 }
 
 ; GLSL: bool allInvocationsEqual(bool)

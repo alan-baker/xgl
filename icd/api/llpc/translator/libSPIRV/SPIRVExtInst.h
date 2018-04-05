@@ -425,6 +425,18 @@ SPIRVMap<ShaderTrinaryMinMaxAMDExtOpKind, std::string>::init() {
 SPIRV_DEF_NAMEMAP(ShaderTrinaryMinMaxAMDExtOpKind,
   ShaderTrinaryMinMaxAMDExtOpMap)
 
+typedef ShaderBallotARB ShaderBallotARBExtOpKind;
+
+template<> inline void
+SPIRVMap<ShaderBallotARBExtOpKind, std::string>::init() {
+  add(BallotARB, "BallotARB");
+  add(ReadInvocationARB, "ReadInvocationARB");
+  add(ReadFirstInvocationARB, "ReadFirstInvocationARB");
+}
+
+SPIRV_DEF_NAMEMAP(ShaderBallotARBExtOpKind,
+  ShaderBallotARBExtOpMap)
+
 }
 
 #endif

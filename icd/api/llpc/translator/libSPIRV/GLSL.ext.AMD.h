@@ -87,6 +87,17 @@ enum GcnShaderAMD {
     GcnShaderCountAMD
 };
 
+// SPV_ARB_shader_ballot
+static const char* const E_SPV_ARB_shader_ballot = "SPV_ARB_shader_ballot";
+
+enum ShaderBallotARB {
+  BallotARB = 0,
+  ReadInvocationARB = 1,
+  ReadFirstInvocationARB = 2,
+
+  ShaderBallotCountARB
+};
+
 // SPV_AMD_gpu_shader_half_float
 static const char* const E_SPV_AMD_gpu_shader_half_float = "SPV_AMD_gpu_shader_half_float";
 

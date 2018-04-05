@@ -1521,7 +1521,8 @@ public:
             ExtSetKind == SPIRVEIS_ShaderBallotAMD ||
             ExtSetKind == SPIRVEIS_ShaderExplicitVertexParameterAMD ||
             ExtSetKind == SPIRVEIS_GcnShaderAMD ||
-            ExtSetKind == SPIRVEIS_ShaderTrinaryMinMaxAMD) &&
+            ExtSetKind == SPIRVEIS_ShaderTrinaryMinMaxAMD ||
+            ExtSetKind == SPIRVEIS_ShaderBallotARB) &&
            "not supported");
   }
   void encode(spv_ostream &O) const {
@@ -1544,6 +1545,9 @@ public:
       break;
     case SPIRVEIS_ShaderTrinaryMinMaxAMD:
       getEncoder(O) << ExtOpShaderTrinaryMinMaxAMD;
+      break;
+    case SPIRVEIS_ShaderBallotARB:
+      getEncoder(O) << ExtOpShaderBallotARB;
       break;
     default:
       assert(0 && "not supported");
@@ -1572,6 +1576,9 @@ public:
       break;
     case SPIRVEIS_ShaderTrinaryMinMaxAMD:
       getDecoder(I) >> ExtOpShaderTrinaryMinMaxAMD;
+      break;
+    case SPIRVEIS_ShaderBallotARB:
+      getDecoder(I) >> ExtOpShaderBallotARB;
       break;
     default:
       assert(0 && "not supported");
@@ -1611,6 +1618,7 @@ protected:
       ExtOpShaderExplicitVertexParameterAMD;
     GcnShaderAMDExtOpKind ExtOpGcnShaderAMD;
     ShaderTrinaryMinMaxAMDExtOpKind ExtOpShaderTrinaryMinMaxAMD;
+    ShaderBallotARBExtOpKind ExtOpShaderBallotARB;
   };
   SPIRVExtInstSetKind ExtSetKind;
 };

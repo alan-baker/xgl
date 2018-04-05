@@ -2183,7 +2183,8 @@ SPIRVToLLVM::transValueWithoutDecoration(SPIRVValue *BV, Function *F,
            Set == SPIRVEIS_ShaderBallotAMD ||
            Set == SPIRVEIS_ShaderExplicitVertexParameterAMD ||
            Set == SPIRVEIS_GcnShaderAMD ||
-           Set == SPIRVEIS_ShaderTrinaryMinMaxAMD);
+           Set == SPIRVEIS_ShaderTrinaryMinMaxAMD ||
+           Set == SPIRVEIS_ShaderBallotARB);
 
     if (Set == SPIRVEIS_OpenCL)
       return mapValue(BV, transOCLBuiltinFromExtInst(BC, BB));
@@ -4386,7 +4387,8 @@ SPIRVToLLVM::transGLSLBuiltinFromExtInst(SPIRVExtInst *BC, BasicBlock *BB)
           Set == SPIRVEIS_ShaderBallotAMD ||
           Set == SPIRVEIS_ShaderExplicitVertexParameterAMD ||
           Set == SPIRVEIS_GcnShaderAMD ||
-          Set == SPIRVEIS_ShaderTrinaryMinMaxAMD)
+          Set == SPIRVEIS_ShaderTrinaryMinMaxAMD ||
+          Set == SPIRVEIS_ShaderBallotARB)
          && "Not valid extended instruction");
 
   SPIRVWord EntryPoint = BC->getExtOp();
@@ -4408,6 +4410,9 @@ SPIRVToLLVM::transGLSLBuiltinFromExtInst(SPIRVExtInst *BC, BasicBlock *BB)
   else if (Set == SPIRVEIS_ShaderTrinaryMinMaxAMD)
     UnmangledName = ShaderTrinaryMinMaxAMDExtOpMap::map(
       static_cast<ShaderTrinaryMinMaxAMDExtOpKind>(EntryPoint));
+  else if (Set == SPIRVEIS_ShaderBallotARB)
+    UnmangledName = ShaderBallotARBExtOpMap::map(
+      static_cast<ShaderBallotARBExtOpKind>(EntryPoint));
 
   string MangledName;
   MangleGLSLBuiltin(UnmangledName, ArgTys, MangledName);
