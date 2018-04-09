@@ -235,6 +235,10 @@ void SpirvLowerAggregateLoadStore::ExpandStoreInst(
                 auto pZero = pElemPointeeTy->isVectorTy() ? ConstantAggregateZero::get(pElemPointeeTy) :
                                                      ConstantInt::get(m_pContext->Int32Ty(), 0);
                 pElemValue = new ICmpInst(pInsertPos, CmpInst::ICMP_NE, pElemValue, pZero, "");
+                if (pElemValue->getType() != pElemPointeeTy) {
+                  // Can't be smaller than i1.
+                  pElemValue = BitCastInst::Create(Instruction::ZExt, pElemValue, pElemPointeeTy, "", pInsertPos);
+                }
                 new StoreInst(pElemValue, pElemPtr, pInsertPos);
             }
         }
